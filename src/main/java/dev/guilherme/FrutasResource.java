@@ -1,7 +1,7 @@
 package dev.guilherme;
 
 import java.util.List;
-import javax.transaction.Transactional;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -10,6 +10,9 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/frutas")
 public class FrutasResource {
+    
+    @Inject
+    FrutasService frutaService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -18,11 +21,7 @@ public class FrutasResource {
     }
     
     @POST
-    @Transactional
-    public void novaFruta() {
-        Fruta fruta = new Fruta();
-        fruta.nome = "Maca";
-        fruta.quantidade = 5;
-        fruta.persist();
+    public void novaFruta(InserirFrutaDTO inserirFrutaDTO) {
+        frutaService.novaFruta(inserirFrutaDTO);
     }
 }
